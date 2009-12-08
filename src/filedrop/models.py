@@ -8,6 +8,7 @@ from tempfile import mkdtemp
 import string
 import random
 import os
+import mimetypes
 
 class ChecksumFormats(object):
     CHOICES = (
@@ -43,12 +44,33 @@ class File(models.Model):
         super(File, self).__init__(*args, **kwargs)
         self.directory = kwargs.get('directory', None)
     
+    @property
+    def mimetype(self):
+        mimetype = mimetypes.guess_type(self.data.storage.path)[0]
+        if mimetype is not None:
+            return mimetype
+        else:
+            return 'application/octet-stream'
+    
+    @property
+    def path(self):
+        return self.data.storage.path
+    
+    @property
+    def filename(self):
+        return os.path.basename(self.data.storage.path)
+    
+    def generate_checksum(self, format='sha512'):
+        with open(self.data.storage.path, 'rb+') as f:
+            self.checksum = checksum(format, f)
+            self.checksum_format = format
+
     def verify(self):
-        with open(self.data.filepath, 'rb+') as f:
+        with open(self.data.storage.path, 'rb+') as f:
             return checksum(self.checksum_format, f) == self.checksum
 
     def __unicode__(self):
-        return self.data.pathname
+        return self.filename
 
 class Message(models.Model):
     key             = models.CharField(max_length=16, unique=True, db_index=True)
