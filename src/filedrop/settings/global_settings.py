@@ -3,7 +3,7 @@ import os
 import filedrop
 
 # FileDrop Settings
-FILEDROP_ROOT = os.path.normpath(os.path.join(filedrop.__path__), "../../"))
+FILEDROP_ROOT = os.path.normpath(os.path.join(filedrop.__path__[0], "../../"))
 USE_XSENDFILE = False
 
 # Database Settings
@@ -55,7 +55,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'filedrop.urls'
 
 TEMPLATE_DIRS = (
-    os.path.normpath(os.path.join(filedrop.__path__), "templates"))
+    os.path.join(FILEDROP_ROOT, "src/filedrop/templates"),
 )
 
 INSTALLED_APPS = (
