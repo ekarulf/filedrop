@@ -7,3 +7,5 @@ downloads/
 .*\.pyc
 .*\.pyo
 src/.*\.egg-info/
+\.installed.cfg
+devel.db
