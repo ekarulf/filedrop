@@ -1,10 +1,10 @@
 from django.conf.urls.defaults import *
 from django.conf import settings
 
-import filedrop
-import django
+import filedrop.views
+import django.contrib.auth.views
 
-urlpatterns = (
+urlpatterns = patterns('',
     url(r'^$', filedrop.views.home, name='home'),
     url(r'^dropoff/$', filedrop.views.dropoff, name='dropoff'),
     url(r'^dropoff/(?P<key>[a-zA-Z0-9]+)/upload/$', filedrop.views.upload, name='dropoff_upload'),
