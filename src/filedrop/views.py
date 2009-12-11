@@ -22,7 +22,7 @@ def _get_message(request, key):
     return msg
 
 def home(request):
-    raise NotImplementedError
+    return render_to_response("index.html")
 
 def dropoff(request, key=None):
     if key is None:

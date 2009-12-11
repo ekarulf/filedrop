@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<title>{% block title %}{% endblock %}</title>
+		<link rel="stylesheet" type="text/css" media="all" href="css/filedrop.css" />
+{% block extra_head %}{% endblock %}
+	</head>
+	<body>
+		<div class="page">
+			<div id="header">Penny Arcade File Drop</div>
+			<div id="menu">
+				<ul>
+					<li><a href="{% url filedrop.views.home %}">Home</a></li>
+					<li><a href="{% url filedrop.views.dropoff %}">Drop Off</a></li>
+{#					<li><a href="{% url filedrop.views.pickup %}">Pick Up</a></li> #}
+{% if user.is_authenticated %}
+					<li><a href="{% url django.contrib.auth.views.logout %}">Logout</a></li>
+{% else %}
+					<li><a href="{% url django.contrib.auth.views.login %}">Login</a></li>
+{% endif %}
+				</ul>
+			</div>
+			<div id="content">
+				{% block content %}
+				<div class="box">
+					<div class="title"><h1>{% block content_title %}Test{% endblock %}</h1></div>
+					<div class="body">{% block content_body %}Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.{% endblock %}</div>
+				</div>
+				{% endblock %}
+			</div>
+			<div id="footer">
+				<p>Having trouble? <a href="mailto:webmaster@penny-arcade.com">Let us know</a>.</p>
+				<p>&copy; {% now "Y" %} Penny Arcade, Inc.</p>
+			</div>
+		</div>
+	</body>
+</html>
